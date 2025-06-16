@@ -4,8 +4,7 @@ self.addEventListener("install", event => {
       return cache.addAll([
         "/3loush/",
         "/3loush/index.html",
-        "/3loush/pro.css",
-        "/3loush/script.js"
+        "/3loush/pro.css"
       ]);
     })
   );
