@@ -2,11 +2,15 @@
 <html lang="ar">
 
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8"
+    name="theme-color"
+    content="#000000">
+  
   <title>My Profile</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="pro.css">
+  <link rel="manifest" href="manifest.json">
 </head>
 
 <body>
@@ -70,6 +74,17 @@
     </label>
     &copy; 2025 Ali Al-Humsi
   </footer>
+  
+  <script src="sw.js"></script>
+  
+  <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js')
+      .then(reg => console.log("Service Worker Registered"))
+      .catch(err => console.error("Service Worker Error", err));
+  }
+</script>
+  
 </body>
 
 </html>
