@@ -36,7 +36,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 
-  <link rel="stylesheet" href="pro.css?v=5">
+  <link rel="stylesheet" href="pro.css?v=6">
 
 
   <link rel="manifest" href="manifest.json">
@@ -252,63 +252,51 @@
         easing: 'ease-in-out'
       });
     </script>
-
+  
 <script>
-      const toast = document.getElementById("toast");
-      let cooldown = false;
-    
-      function showToast(message, type = "success") {
-        toast.textContent = message;
-        toast.className = `toast show ${type}`;
-        setTimeout(() => toast.classList.remove("show"), 4000);
+document.getElementById("contact-form").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  if (cooldown) {
+    showToast("⏱️ انتظر قليلاً قبل الإرسال مرة أخرى.", "error");
+    return;
+  }
+
+  const form = e.target;
+  const name = form.querySelector("input[name='name']").value.trim();
+  const email = form.querySelector("input[name='email']").value.trim();
+  const message = form.querySelector("textarea[name='message']").value.trim();
+
+  if (!name || !email || !message) {
+    showToast("❌ جميع الحقول مطلوبة.", "error");
+    return;
+  }
+
+  if (!validateEmail(email)) {
+    showToast("❌ البريد الإلكتروني غير صالح.", "error");
+    return;
+  }
+
+  fetch("https://script.google.com/macros/s/AKfycbyR9T3qokIaiQuq9ObnSewGxQUExL_XGw2Znu0mXzCZGTeII4_06DljDkbvVWAAxlXC7A/exec", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, email, message })
+  })
+    .then(res => {
+      if (res.ok) {
+        showToast("✅ تم إرسال الرسالة بنجاح!");
+        form.reset();
+        cooldown = true;
+        setTimeout(() => cooldown = false, 5000);
+      } else {
+        throw new Error();
       }
-    
-      function validateEmail(email) {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-      }
-    
-      document.getElementById("contact-form").addEventListener("submit", function (e) {
-        e.preventDefault();
-    
-        if (cooldown) {
-          showToast("⏱️ انتظر قليلاً قبل الإرسال مرة أخرى.", "error");
-          return;
-        }
-    
-        const name = this.name.value.trim();
-        const email = this.email.value.trim();
-        const message = this.message.value.trim();
-    
-        if (!name || !email || !message) {
-          showToast("❌ جميع الحقول مطلوبة.", "error");
-          return;
-        }
-    
-        if (!validateEmail(email)) {
-          showToast("❌ البريد الإلكتروني غير صالح.", "error");
-          return;
-        }
-    
-        fetch("https://script.google.com/macros/s/AKfycbyR9T3qokIaiQuq9ObnSewGxQUExL_XGw2Znu0mXzCZGTeII4_06DljDkbvVWAAxlXC7A/exec", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email, message })
-        })
-        .then(res => {
-          if (res.ok) {
-            showToast("✅ تم إرسال الرسالة بنجاح!");
-            this.reset();
-            cooldown = true;
-            setTimeout(() => cooldown = false, 5000);
-          } else {
-            throw new Error();
-          }
-        })
-        .catch(() => {
-          showToast("❌ حدث خطأ أثناء الإرسال.", "error");
-        });
-      });
-    </script>
+    })
+    .catch(() => {
+      showToast("❌ حدث خطأ أثناء الإرسال.", "error");
+    });
+});
+</script>
   
 </body>
 
