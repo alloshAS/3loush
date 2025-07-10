@@ -36,7 +36,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 
-  <link rel="stylesheet" href="pro.css?v=11">
+  <link rel="stylesheet" href="pro.css?v=12">
 
 
   <link rel="manifest" href="manifest.json">
@@ -294,6 +294,7 @@
 
     fetch("https://script.google.com/macros/s/AKfycbwRV1AE2a57myNpLkqahZYDOMlgnTLIfKHOSh_EBCmI0g3Bsh_DzUUtjYp6DrOSKpVaLw/exec", {
       method: "POST",
+      mode: "no-cors",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, email, message })
     })
