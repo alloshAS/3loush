@@ -169,7 +169,19 @@
       </div>
     
     </div>
+
+<section id="contact-me" class="contact-section" data-aos="fade-up">
+      <h2 class="section-title"><i class="fas fa-comments"></i> تواصل معي </h2>
+      <form class="contact-form" id="contact-form">
+        <input type="text" name="name" placeholder="الاسم" required>
+        <input type="email" name="email" placeholder="البريد الإلكتروني" required>
+        <textarea name="message" rows="5" placeholder="رسالتك" required></textarea>
+        <button type="submit"> أرسل <i class="fas fa-envelope"></i></button>
+      </form>
+    </section>
+
   </main>
+
   <!-- Footer -->
   <footer>
     &copy; 2025 Ali Al-Humsi
@@ -238,6 +250,63 @@
         once: true,
         delay:90,
         easing: 'ease-in-out'
+      });
+    </script>
+
+<script>
+      const toast = document.getElementById("toast");
+      let cooldown = false;
+    
+      function showToast(message, type = "success") {
+        toast.textContent = message;
+        toast.className = `toast show ${type}`;
+        setTimeout(() => toast.classList.remove("show"), 4000);
+      }
+    
+      function validateEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      }
+    
+      document.getElementById("contact-form").addEventListener("submit", function (e) {
+        e.preventDefault();
+    
+        if (cooldown) {
+          showToast("⏱️ انتظر قليلاً قبل الإرسال مرة أخرى.", "error");
+          return;
+        }
+    
+        const name = this.name.value.trim();
+        const email = this.email.value.trim();
+        const message = this.message.value.trim();
+    
+        if (!name || !email || !message) {
+          showToast("❌ جميع الحقول مطلوبة.", "error");
+          return;
+        }
+    
+        if (!validateEmail(email)) {
+          showToast("❌ البريد الإلكتروني غير صالح.", "error");
+          return;
+        }
+    
+        fetch("https://script.google.com/macros/s/AKfycbxFv8XtZsyvmzOPHk87XqFNW6gzwWAQtF-c00n5dJOLribAcW_eNtzqPKDowE9eV-Ch9Q/exec", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, message })
+        })
+        .then(res => {
+          if (res.ok) {
+            showToast("✅ تم إرسال الرسالة بنجاح!");
+            this.reset();
+            cooldown = true;
+            setTimeout(() => cooldown = false, 5000);
+          } else {
+            throw new Error();
+          }
+        })
+        .catch(() => {
+          showToast("❌ حدث خطأ أثناء الإرسال.", "error");
+        });
       });
     </script>
   
