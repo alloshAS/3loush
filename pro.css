@@ -624,3 +624,78 @@ main, header, footer {
     margin-top: 90px;
   }
 }
+
+.contact-section {
+  padding: 50px 20px;
+  background-color: #111;
+  color: #fff;
+  text-align: center;
+}
+
+.contact-section .section-title {
+  font-size: 2em;
+  margin-bottom: 30px;
+}
+
+.contact-form {
+  max-width: 500px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: #222;
+  color: #fff;
+  font-size: 1em;
+}
+
+.contact-form button {
+  padding: 12px;
+  background-color: #ff0044;
+  border: none;
+  color: white;
+  font-size: 1em;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.contact-form button:hover {
+  background-color: #c2185b;
+}
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #222;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #000;
+  font-size: 1em;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease, transform 0.3s ease;
+  z-index: 9999;
+}
+
+.toast.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.toast.success {
+  background-color: #4caf50;
+}
+
+.toast.error {
+  background-color: #f44336;
+}
