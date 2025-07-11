@@ -36,10 +36,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 
-  <link rel="stylesheet" href="pro.css?v=17">
+  <link rel="stylesheet" href="pro.css?v=18">
 
 
-  <link rel="manifest" href="manifest.json?v=16">
+  <link rel="manifest" href="manifest.json?v=17">
 
 
   <link rel="icon" href="1/3.jpg" type="image/jpeg">
@@ -291,16 +291,18 @@
       
       const result = await response.json();
       if (result.success) {
-        showToast(" تم الإرسال بنجاح شكراً لتواصلك معي");
+        showToast(" تم الإرسال بنجاح شكراً لك لتواصلك معي");
         form.reset();
         cooldown = true;
         setTimeout(() => cooldown = false, 5000);
       } else {
         throw new Error(result.error || "خطأ غير معروف");
+        form.reset();
       }
     } catch (error) {
       console.error("Error:", error);
       showToast(` ${error.message}`, "error");
+      form.reset();
     }
   });
 </script>
