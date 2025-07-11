@@ -697,5 +697,11 @@ main, header, footer {
 }
 
 .toast.error {
-  background-color: #f44336;
+  background-color: #4caf50;
+}
+.toast.Warning {
+  background-color: #ff9800;
+}
+.toast.info {
+  background-color: #2196f3;
 }
